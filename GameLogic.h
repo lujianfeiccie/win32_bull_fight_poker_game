@@ -45,6 +45,6 @@ void showResult(Result result);
 Result getAIResult(int player,const Card* cards);
 int getPoint(Result result);
 int compare(Result result1,Result result2);
-void showWinner(const Player *player,const int num,const int dealer);
 int getDealer(const int numOfPlayers);
 void showDealer(const int dealer,int numOfPlayers);
+void showScore(Player *player,const int num,const int dealer);

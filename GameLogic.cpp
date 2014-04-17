@@ -2,7 +2,9 @@
 #include "GameLogic.h"
 #include<stdlib.h>
 #include<time.h>
-void initSrand(){
+#include <string.h>
+void initSrand()
+{
 	srand((int)time(0));
 }
 void initCard(const char* card_char,int size_of_card_char,Card* cards,int numOfCards){
@@ -284,11 +286,9 @@ int getPoint(Result result)
   case N4:
   case N3:
   case N2:
-  case ND:{
-   return 1;
-  }
+  case ND:
   case NO_GOOD:{
-   return 0;
+   return 1;
   }
  }
  return 0;
@@ -297,22 +297,7 @@ int compare(Result result1,Result result2)
 {
  return result2 - result1;
 }
-void showWinner(const Player *player,const int num,const int dealer)
-{
- Result result_dealer = player[dealer].result;
- int dealer_win = 1;
- for(int i=0;i<num;i++)
- {
-  if(compare(result_dealer,player[i].result)<0){
-   dealer_win = 0;
-  }
- }
- if(dealer_win ==1){
-  printf("庄家赢\n");
- }else{
-  printf("庄家输\n");
- }
-}
+
 int getDealer(const int numOfPlayers){
   int dealer = rand() % numOfPlayers;
   return dealer;
@@ -325,4 +310,42 @@ void showDealer(const int dealer,int numOfPlayers)
   printf("庄家:自己");
  }
  printf("\n");
+}
+
+void showScore(Player *player,const int num,const int dealer)
+{
+ Result result_dealer = player[dealer].result;
+ 
+ int other_player_score_count = 0;//用于计算闲家的输赢情况
+ int* score = new int[num];
+ memset(score,0,sizeof(int)*num);
+
+ for(int i=0;i<num;i++)
+ {
+  if(dealer==i) continue;
+
+  if(compare(player[i].result,result_dealer) > 0 )//闲家比庄家大
+  {
+	//闲家赢钱
+	  score[i] = getPoint(player[i].result);
+  }
+  else//闲家小于或等于庄家
+  {
+	//闲家输钱
+	  score[i] = (-1) * getPoint(player[i].result);
+  }
+  other_player_score_count += score[i];
+ }
+ 
+  // player[dealer].score += -other_player_score_count;
+  score[dealer]  += (-1)*other_player_score_count;
+  for(int i=0;i<num;i++)
+  {
+	 if(i<num-1)
+	    printf("玩家%d\t分数:%d",player[i].player,score[i]);
+	 else
+        printf("自己\t分数:%d",score[i]);
+
+	 printf("\n");
+  }
 }

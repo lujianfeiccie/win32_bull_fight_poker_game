@@ -66,8 +66,12 @@ int _tmain(int argc, _TCHAR* argv[])
   Result result = getResult(card1,card2,card3,NUM_OF_PLAYER-1,cards);
   players[NUM_OF_PLAYER-1].result = result;
   showResult(result);
-  showWinner(players,NUM_OF_PLAYER,dealer);
-  //5.是否继续
+  printf("\n");
+
+  //6.显示分数
+  showScore(players,NUM_OF_PLAYER,dealer);
+  
+  //7.是否继续
   printf("\n继续? y or n:");
   fflush(stdin);
   if((getchar())=='n'){
