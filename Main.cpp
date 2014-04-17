@@ -69,6 +69,7 @@ int _tmain(int argc, _TCHAR* argv[])
   printf("\n");
 
   //6.显示分数
+  printf("\n===============分数====================\n\n");
   showScore(players,NUM_OF_PLAYER,dealer);
   
   //7.是否继续

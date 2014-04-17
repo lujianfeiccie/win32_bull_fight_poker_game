@@ -334,18 +334,22 @@ void showScore(Player *player,const int num,const int dealer)
 	//闲家输钱
 	  score[i] = (-1) * getPoint(player[i].result);
   }
+  player[i].score += score[i];
   other_player_score_count += score[i];
  }
  
-  // player[dealer].score += -other_player_score_count;
   score[dealer]  += (-1)*other_player_score_count;
+  player[dealer].score += score[dealer];
   for(int i=0;i<num;i++)
   {
 	 if(i<num-1)
-	    printf("玩家%d\t分数:%d",player[i].player,score[i]);
+	 {
+		 printf("玩家%d\t分数:%d\t总分:%d",player[i].player,score[i],player[i].score);
+	 }
 	 else
-        printf("自己\t分数:%d",score[i]);
-
+	 {
+		 printf("自己\t分数:%d\t部分:%d",score[i],player[i].score);
+	 }
 	 printf("\n");
   }
 }
